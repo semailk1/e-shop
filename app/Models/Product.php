@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property string $title
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $rating
  * @property int $discount
  * @property int $purchase_price
+ * @property int $quantity
  * @property array $images
  * @property string $description
  *
@@ -33,15 +35,27 @@ class Product extends Model
         'description',
         'purchase_price',
         'discount',
-        'rating'
+        'rating',
+        'quantity'
     ];
 
     protected $casts = [
         'images' => 'array'
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function filters(): BelongsToMany
+    {
+        return $this->belongsToMany(Filter::class);
     }
 }

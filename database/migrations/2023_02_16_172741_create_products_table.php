@@ -17,12 +17,17 @@ return new class extends Migration
                 ->constrained('categories')
                 ->references('id')
                 ->cascadeOnDelete();
+            $table->foreignId('brand_id')
+                ->constrained('brands')
+                ->references('id')
+                ->cascadeOnDelete();
 
             $table->bigInteger('article')->unique();
             $table->string('title');
             $table->text('description');
             $table->json('images');
             $table->double('purchase_price');
+            $table->double('quantity');
             $table->double('price');
             $table->double('discount')->default(0);
             $table->float('rating')->default(0);
