@@ -487,7 +487,7 @@
                                                                 <div class="product-action">
                                                                     <div class="button-group">
                                                                         <div class="product-button">
-                                                                            <button><i class="fa fa-shopping-cart"></i>
+                                                                            <button class="add-cart" data-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>
                                                                                 Add
                                                                                 to Cart
                                                                             </button>

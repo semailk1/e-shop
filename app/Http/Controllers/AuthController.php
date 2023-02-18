@@ -66,5 +66,7 @@ class AuthController extends Controller
         $newUser->first_name = $request->first_name;
         $newUser->phone = $request->phone;
         $newUser->save();
+
+        return redirect()->route('login.index');
     }
 }

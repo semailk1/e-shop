@@ -72,6 +72,7 @@
                                 </ul>
                             </li>
                         </ul>
+{{--                        @dd($cart)--}}
                         <!-- End Language -->
                         <!-- Start Currency -->
                         <ul class="currency">
@@ -90,14 +91,17 @@
                     <div class="top-link">
                         <ul class="link">
                             <li><a href="my-account.html"><i class="fa fa-user"></i> My Account</a></li>
-                            <li><a href="wishlist.html"><i class="fa fa-heart"></i> Wish List (0)</a></li>
+                            <li><a href="{{ route('cart.wishlist') }}"><i class="fa fa-heart"></i> Wish List (0)</a>
+                            </li>
                             <li><a href="checkout.html"><i class="fa fa-share"></i> Checkout</a></li>
                             @if(auth()->check())
                                 <li><a href="account.html"><i
                                             class="fa fa-unlock-alt"></i>{{ \Illuminate\Support\Facades\Auth::user()->first_name }}
                                     </a></li>
                             @else
-                                <li><a href="account.html"><i class="fa fa-unlock-alt"></i> Login</a></li>
+                                <li><a href="{{ route('register.index') }}"><i class="fa fa-unlock-alt"></i>
+                                        Register</a></li>
+                                <li><a href="{{ route('login.index') }}"><i class="fa fa-unlock-alt"></i> Login</a></li>
                             @endif
                         </ul>
                     </div>
@@ -198,7 +202,7 @@
                         <div class="top-cart">
                             <ul>
                                 <li>
-                                    <a href="cart.html">
+                                    <a href="{{ route('cart.index') }}">
                                         <span class="cart-icon"><i class="fa fa-shopping-cart"></i></span>
                                         <span class="cart-total">
 			                    					<span class="cart-title">shopping cart</span>
@@ -207,39 +211,28 @@
 			                    				</span>
                                     </a>
                                     <div class="mini-cart-content">
-                                        <div class="cart-img-details">
-                                            <div class="cart-img-photo">
-                                                <a href="#"><img src="{{ asset('img/product/total-cart.jpg') }}"
-                                                                 alt="#"></a>
-                                            </div>
-                                            <div class="cart-img-content">
-                                                <a href="#"><h4>Prod Aldults</h4></a>
-                                                <span>
-															<strong class="text-right">1 x</strong>
-															<strong class="cart-price text-right">$180.00</strong>
-														</span>
-                                            </div>
-                                            <div class="pro-del">
-                                                <a href="#"><i class="fa fa-times"></i></a>
-                                            </div>
-                                        </div>
                                         <div class="clear"></div>
+                                        <?php use App\Models\Product;$cart = \Illuminate\Support\Facades\Session::has('cart') ?
+                                            Product::query()->whereIn('id', Session::get('cart'))->get() : [] ?>
+
+                                        @foreach($cart as $product)
                                         <div class="cart-img-details">
                                             <div class="cart-img-photo">
-                                                <a href="#"><img src="{{ asset('img/product/total-cart2.jpg') }}"
+                                                <a href="#"><img width="60" src="{{ asset($product->images[0]) }}"
                                                                  alt="#"></a>
                                             </div>
                                             <div class="cart-img-content">
-                                                <a href="#"><h4>Fact Prone</h4></a>
+                                                <a href="#"><h4>{{ $product->title }}</h4></a>
                                                 <span>
-															<strong class="text-right">1 x</strong>
-															<strong class="cart-price text-right">$185.00</strong>
+{{--															<strong class="text-right">1 x</strong>--}}
+															<strong class="cart-price text-right">m {{ $product->price }}</strong>
 														</span>
                                             </div>
                                             <div class="pro-del">
                                                 <a href="#"><i class="fa fa-times"></i></a>
                                             </div>
                                         </div>
+                                        @endforeach
                                         <div class="cart-inner-bottom">
 													<span class="total">
 														Total:
@@ -269,7 +262,7 @@
                     <div class="mainmenu hidden-sm hidden-xs">
                         <nav>
                             <ul>
-                                <li><a href="index.html">Home</a>
+                                <li><a href="{{ route('product.index') }}">Home</a>
                                     <ul>
                                         <li><a href="index.html">Home Versions 1</a></li>
                                         <li><a href="index-2.html">Home Versions 2</a></li>
@@ -572,6 +565,34 @@
                 }
             })
         })
+        $('.favorite-remove').click(function () {
+            let id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('favorite.remove') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id
+                },
+                success: function () {
+                    location.reload()
+                }
+            })
+        }),
+            $('.add-cart').click(function () {
+                let id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('cart.add') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    },
+                    success: function (response) {
+                        console.log(response)
+                    }
+                })
+            })
     })
 </script>
 </body>

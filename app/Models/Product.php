@@ -58,4 +58,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Filter::class);
     }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }

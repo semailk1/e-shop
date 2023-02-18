@@ -11,6 +11,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
+
         if (!empty($request->decodedPath()) || $request->get('search')) {
             $sortByIdsProducts = DB::table('products as p')
                 ->select('p.id')
