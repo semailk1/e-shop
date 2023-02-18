@@ -9,7 +9,7 @@
 
     <!-- favicon
     ============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
 
     <!-- Google Fonts
     ============================================ -->
@@ -18,36 +18,36 @@
 
     <!-- Bootstrap CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Font awesome CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <!-- owl.carousel CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/owl.carousel.css">
-    <link rel="stylesheet" href="css/owl.theme.css">
-    <link rel="stylesheet" href="css/owl.transitions.css">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.transitions.css') }}">
     <!-- nivo slider CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/nivo-slider.css" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/nivo-slider.css') }}" type="text/css"/>
     <!-- meanmenu CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/meanmenu.min.css">
+    <link rel="stylesheet" href="{{ asset('css/meanmenu.min.css') }}">
     <!-- jquery-ui CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
     <!-- animate CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="{{asset('css/animate.css')}}">
     <!-- main CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <!-- style CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- responsive CSS
     ============================================ -->
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 <body>
 <!-- HEADER-AREA START -->
@@ -60,11 +60,15 @@
                     <div class="top-menu">
                         <!-- Start Language -->
                         <ul class="language">
-                            <li><a href="#"><img class="right-5" src="img/flags/gb.png" alt="#">English<i class="fa fa-caret-down left-5"></i></a>
+                            <li><a href="#"><img class="right-5" src="{{ asset('img/flags/gb.png') }}" alt="#">English<i
+                                        class="fa fa-caret-down left-5"></i></a>
                                 <ul>
-                                    <li><a href="#"><img class="right-5" src="img/flags/fr.png" alt="#">French</a></li>
-                                    <li><a href="#"><img class="right-5" src="img/flags/gb.png" alt="#">English</a></li>
-                                    <li><a href="#"><img class="right-5" src="img/flags/gb.png" alt="#">English</a></li>
+                                    <li><a href="#"><img class="right-5" src="{{ asset('img/flags/fr.png') }}" alt="#">French</a>
+                                    </li>
+                                    <li><a href="#"><img class="right-5" src="{{ asset('img/flags/gb.png') }}" alt="#">English</a>
+                                    </li>
+                                    <li><a href="#"><img class="right-5" src="{{ asset('img/flags/gb.png') }}" alt="#">English</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -88,7 +92,13 @@
                             <li><a href="my-account.html"><i class="fa fa-user"></i> My Account</a></li>
                             <li><a href="wishlist.html"><i class="fa fa-heart"></i> Wish List (0)</a></li>
                             <li><a href="checkout.html"><i class="fa fa-share"></i> Checkout</a></li>
-                            <li><a href="account.html"><i class="fa fa-unlock-alt"></i> Login</a></li>
+                            @if(auth()->check())
+                                <li><a href="account.html"><i
+                                            class="fa fa-unlock-alt"></i>{{ \Illuminate\Support\Facades\Auth::user()->first_name }}
+                                    </a></li>
+                            @else
+                                <li><a href="account.html"><i class="fa fa-unlock-alt"></i> Login</a></li>
+                            @endif
                         </ul>
                     </div>
                     <!-- End Top-Link -->
@@ -156,7 +166,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12">
                     <div class="logo">
-                        <a href="index.html" title="Malias"><img src="img/logo.png" alt="Malias"></a>
+                        <a href="index.html" title="Malias"><img src="{{ asset('img/logo.png') }}" alt="Malias"></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-sm-12">
@@ -165,27 +175,22 @@
                             <div class="search-container">
                                 <select>
                                     <option class="all-cate">All Categories</option>
-                                    <optgroup  class="cate-item-head" label="Cameras & Photography">
-                                        <option class="cate-item-title">Handbags</option>
-                                        <option class="c-item">Blouses And Shirts</option>
-                                        <option class="c-item">Clouthes</option>
-                                    </optgroup>
-                                    <optgroup  class="cate-item-head" label="Laptop & Computer">
-                                        <option class="cate-item-title">Apple</option>
-                                        <option class="c-item">Dell</option>
-                                        <option class="c-item">Hp</option>
-                                        <option class="c-item">Sony</option>
-                                    </optgroup>
-                                    <optgroup  class="cate-item-head" label="Electronic">
-                                        <option class="c-item">Mobile</option>
-                                        <option class="c-item">Speaker</option>
-                                        <option class="c-item">Headphone</option>
-                                    </optgroup>
+                                    @foreach($categories as $category)
+                                        @if($category->parent_id == 0)
+                                            <optgroup class="cate-item-head" label="{{ $category->name }}">
+                                                @endif
+                                                @foreach($category->childrens as $child)
+                                                    <option class="cate-item-title">{{ $child->name }}</option>
+                                                @endforeach
+                                                @if($category->parent_id == 0)
+                                            </optgroup>
+                                        @endif
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="header-search">
-                                <form action="#">
-                                    <input type="text" placeholder="Search">
+                                <form action="{{ route('product.index') }}" method="GET">
+                                    <input name="search" type="text" placeholder="Search">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
@@ -204,7 +209,8 @@
                                     <div class="mini-cart-content">
                                         <div class="cart-img-details">
                                             <div class="cart-img-photo">
-                                                <a href="#"><img src="img/product/total-cart.jpg" alt="#"></a>
+                                                <a href="#"><img src="{{ asset('img/product/total-cart.jpg') }}"
+                                                                 alt="#"></a>
                                             </div>
                                             <div class="cart-img-content">
                                                 <a href="#"><h4>Prod Aldults</h4></a>
@@ -220,7 +226,8 @@
                                         <div class="clear"></div>
                                         <div class="cart-img-details">
                                             <div class="cart-img-photo">
-                                                <a href="#"><img src="img/product/total-cart2.jpg" alt="#"></a>
+                                                <a href="#"><img src="{{ asset('img/product/total-cart2.jpg') }}"
+                                                                 alt="#"></a>
                                             </div>
                                             <div class="cart-img-content">
                                                 <a href="#"><h4>Fact Prone</h4></a>
@@ -347,47 +354,47 @@
             <div class="active-brand-logo">
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/1.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/1.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/2.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/2.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/3.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/3.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/4.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/4.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/5.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/5.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/6.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/6.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/1.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/1.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/2.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/2.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="single-brand-logo">
-                        <a href="#"><img src="img/brand/3.png" alt=""></a>
+                        <a href="#"><img src="{{ asset('img/brand/3.png') }}" alt=""></a>
                     </div>
                 </div>
             </div>
@@ -483,7 +490,8 @@
                                 <i class="fa fa-home"></i><span>Towerthemes, 1234 Stret Lorem, LPA States, Libero</span>
                             </li>
                             <li>
-                                <i class="fa fa-envelope-o"></i><p><a href="contact.html">admin@bootexperts.com</a></p>
+                                <i class="fa fa-envelope-o"></i>
+                                <p><a href="contact.html">admin@bootexperts.com</a></p>
                             </li>
                             <li>
                                 <i class="fa fa-phone"></i>
@@ -502,9 +510,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright">
-                        <p>Copyright &copy; Взято с <a href="http://bayguzin.ru" target="_blank"> bayguzin.ru</a> All rights reserved.</p>
+                        <p>Copyright &copy; Взято с <a href="http://bayguzin.ru" target="_blank"> bayguzin.ru</a> All
+                            rights reserved.</p>
                         <div class="payment">
-                            <a href="#"><img src="img/payment.png" alt="Payment"></a>
+                            <a href="#"><img src="{{ asset('img/payment.png') }}" alt="Payment"></a>
                         </div>
                     </div>
                 </div>
@@ -516,36 +525,54 @@
 <!-- FOOTER-AREA END -->
 <!-- jquery
 		============================================ -->
-<script src="js/jquery-1.11.3.min.js"></script>
+<script src="{{ asset('js/jquery-1.11.3.min.js') }}"></script>
 <!-- bootstrap JS
 ============================================ -->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <!-- wow JS
 ============================================ -->
-<script src="js/wow.min.js"></script>
+<script src="{{ asset('js/wow.min.js') }}"></script>
 <!-- meanmenu JS
 ============================================ -->
-<script src="js/jquery.meanmenu.js"></script>
+<script src="{{ asset('js/jquery.meanmenu.js') }}"></script>
 <!-- owl.carousel JS
 ============================================ -->
-<script src="js/owl.carousel.min.js"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
 <!-- scrollUp JS
 ============================================ -->
-<script src="js/jquery.scrollUp.min.js"></script>
+<script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
 <!-- countdon.min JS
 ============================================ -->
-<script src="js/countdon.min.js"></script>
+<script src="{{ asset('js/countdon.min.js') }}"></script>
 <!-- jquery-price-slider js
 ============================================ -->
-<script src="js/jquery-price-slider.js"></script>
+<script src="{{ asset('js/jquery-price-slider.js') }}"></script>
 <!-- Nivo slider js
 ============================================ -->
-<script src="js/jquery.nivo.slider.js" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.nivo.slider.js') }}" type="text/javascript"></script>
 <!-- plugins JS
 ============================================ -->
-<script src="js/plugins.js"></script>
+<script src="{{ asset('js/plugins.js') }}"></script>
 <!-- main JS
 ============================================ -->
-<script src="js/main.js"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('.favorites').click(function () {
+            let id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('favorite.add') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id
+                },
+                success: function (response) {
+                    console.log(response)
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>
