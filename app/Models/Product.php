@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $price
  * @property int $article
  * @property int $category_id
+ * @property int $brand_id
  * @property int $rating
  * @property int $discount
  * @property int $purchase_price
@@ -31,6 +32,7 @@ class Product extends Model
         'title',
         'price',
         'category_id',
+        'brand_id',
         'images',
         'description',
         'purchase_price',

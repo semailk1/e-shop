@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -59,17 +60,19 @@ class CartController extends Controller
 
     public function favoriteAdd(Request $request)
     {
-        $favorites = Session::get('favorites');
+        $favorites = Session::has('favorites') ? Session::get('favorites') : [];
+
         if (in_array($request->id, $favorites)) {
             unset($favorites[array_search($request->id, $favorites)]);
 
             Session::put('favorites', $favorites);
             return response()->json('Удаленно из избранных!');
         }
-        $arrayIds = collect($favorites);
-        $arrayIds->add($request->id);
 
-        Session::put('favorites', $arrayIds->unique()->toArray());
+        $arrayIds = Arr::add($favorites,count($favorites),$request->id);
+
+
+        Session::put('favorites', $arrayIds);
 
         return true;
     }

@@ -91,7 +91,7 @@
                     <div class="top-link">
                         <ul class="link">
                             <li><a href="my-account.html"><i class="fa fa-user"></i> My Account</a></li>
-                            <li><a href="{{ route('cart.wishlist') }}"><i class="fa fa-heart"></i> Wish List (0)</a>
+                            <li><a href="{{ route('cart.wishlist') }}"><i class="fa fa-heart"></i> Wish List ({{ \Illuminate\Support\Facades\Session::has('favorites') ? count(\Illuminate\Support\Facades\Session::get('favorites')) : 0 }})</a>
                             </li>
                             <li><a href="checkout.html"><i class="fa fa-share"></i> Checkout</a></li>
                             @if(auth()->check())
@@ -206,7 +206,7 @@
                                         <span class="cart-icon"><i class="fa fa-shopping-cart"></i></span>
                                         <span class="cart-total">
 			                    					<span class="cart-title">shopping cart</span>
-				                    				<span class="cart-item">2 item(s)- </span>
+				                    				<span class="cart-item">{{ \Illuminate\Support\Facades\Session::has('cart') ? count(\Illuminate\Support\Facades\Session::get('cart')) : 0}} item(s)- </span>
 				                    				<span class="top-cart-price">$365.00</span>
 			                    				</span>
                                     </a>

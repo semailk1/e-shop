@@ -200,8 +200,10 @@
                             <div class="price_filter">
                                 <div id="slider-range"></div>
                                 <div class="price_slider_amount">
-                                    <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
-                                    <input type="submit" value="Filter"/>
+                                    <form action="{{ route('product.filter') }}" method="GET">
+                                        <input type="text" id="amount" name="price" placeholder="Add Your Price"/>
+                                        <input type="submit" value="Filter"/>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +216,8 @@
                             <div class="filter-menu">
                                 <ul>
                                     @foreach($brands as $brand)
-                                        <li><a href="#">{{ $brand->name }} ({{$brand->products->count()}})</a></li>
+                                        <li><a href="{{ $brand->id }}">{{ $brand->name }} ({{$brand->products->count()}}
+                                                )</a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -487,7 +490,9 @@
                                                                 <div class="product-action">
                                                                     <div class="button-group">
                                                                         <div class="product-button">
-                                                                            <button class="add-cart" data-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>
+                                                                            <button class="add-cart"
+                                                                                    data-id="{{ $product->id }}"><i
+                                                                                    class="fa fa-shopping-cart"></i>
                                                                                 Add
                                                                                 to Cart
                                                                             </button>
@@ -501,9 +506,10 @@
                                                                             <a href="#" data-toggle="tooltip"
                                                                                title="Compare"><i
                                                                                     class="fa fa-signal"></i></a>
-                                                                            <a href="#" class="modal-view"
-                                                                               data-toggle="modal"
-                                                                               data-target="#productModal"
+                                                                            <a href="{{ route('product.show', $product->id) }}"
+                                                                               {{--                                                                               class="modal-view"--}}
+                                                                               {{--                                                                               data-toggle="modal"--}}
+                                                                               {{--                                                                               data-target="#productModal"--}}
                                                                                title="Quickview"><i
                                                                                     class="fa fa-search-plus"></i></a>
                                                                         </div>

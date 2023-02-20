@@ -410,63 +410,31 @@
 									<div class="clear"></div>
 									<div class="tab-content">
 										<!-- Product = display-1-1 -->
-										<div role="tabpanel" class="tab-pane fade in active" id="display-1">
+                                        @foreach($product->images as $key => $image)
+										<div role="tabpanel" class="tab-pane fade in @if($key == 0) active @endif" id="display-{{$key + 1}}">
 											<div class="row">
 												<div class="col-xs-12">
 													<div class="toch-photo">
-														<a href="#"><img src="{{ asset('img/toch/1.jpg') }}" data-imagezoom="true" alt="#" /></a>
+														<a href="#"><img src="{{ asset($image) }}" style="width: 250px !important; height: 350px !important;" data-imagezoom="true" alt="#" /></a>
 													</div>
 												</div>
 											</div>
 										</div>
+                                    @endforeach
 										<!-- End Product = display-1-1 -->
-										<!-- Start Product = display-1-2 -->
-										<div role="tabpanel" class="tab-pane fade" id="display-2">
-											<div class="row">
-												<div class="col-xs-12">
-													<div class="toch-photo">
-														<a href="#"><img src="{{ asset('img/toch/2.jpg') }}" data-imagezoom="true" alt="#" /></a>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- End Product = display-1-2 -->
-										<!-- Start Product = di3play-1-3 -->
-										<div role="tabpanel" class="tab-pane fade" id="display-3">
-											<div class="row">
-												<div class="col-xs-12">
-													<div class="toch-photo">
-														<a href="#"><img src="{{ asset('img/toch/3.jpg') }}" data-imagezoom="true" alt="#" /></a>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- End Product = display-1-3 -->
-										<!-- Start Product = di3play-1-4 -->
-										<div role="tabpanel" class="tab-pane fade" id="display-4">
-											<div class="row">
-												<div class="col-xs-12">
-													<div class="toch-photo">
-														<a href="#"><img src="{{ asset('img/toch/4.jpg') }}" data-imagezoom="true" alt="#" /></a>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- End Product = display-1-4 -->
 									</div>
 									<!-- Start Toch-prond-Menu -->
 									<div class="toch-prond-menu">
 										<ul role="tablist">
-											<li role="presentation" class=" active"><a href="#display-1" role="tab" data-toggle="tab"><img src="{{ asset('img/toch/1.jpg') }}" alt="#" /></a></li>
-											<li role="presentation"><a href="#display-2" role="tab" data-toggle="tab"><img src="{{ asset('img/toch/2.jpg') }}" alt="#" /></a></li>
-											<li role="presentation"><a href="#display-3"  role="tab" data-toggle="tab"><img src="{{ asset('img/toch/3.jpg') }}" alt="#" /></a></li>
-											<li role="presentation"><a href="#display-4"  role="tab" data-toggle="tab"><img src="{{ asset('img/toch/4.jpg') }}" alt="#" /></a></li>
-										</ul>
+                                            @foreach($product->images as $key => $image)
+											<li role="presentation" @if($key == 0) class="active" @endif><a href="#display-{{$key + 1}}" role="tab" data-toggle="tab"><img style="width: 100px !important; height: 100px !important;" src="{{ asset($image) }}" alt="#" /></a></li>
+                                            @endforeach
+                                        </ul>
 									</div>
 									<!-- End Toch-prond-Menu -->
 								</div>
 								<div class="col-md-7 col-sm-7 col-xs-12">
-									<h2 class="title-product"> Toch Prond</h2>
+									<h2 class="title-product"> {{ $product->title }}</h2>
 									<div class="about-toch-prond">
 										<p>
 											<span class="rating">
@@ -481,59 +449,12 @@
 											<a href="#">Write a review</a>
 										</p>
 										<hr />
-										<p class="short-description">Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nul... </p>
+										<p class="short-description">{{ $product->description }}</p>
 										<hr />
-										<span class="current-price">$100.00</span>
+										<span class="current-price">{{ $product->price }} Manat</span>
 										<span class="item-stock">Availability: <span class="text-stock">In Stock</span></span>
 									</div>
-									<div class="about-product">
-										<div class="product-select product-color">
-											<label><sup>*</sup>Color</label>
-											<select class="form-control">
-												<option> --- Please Select --- </option>
-												<option>Black (+$10.00) </option>
-												<option>White (+$8.00)</option>
-												<option>Pink (+$30.00)</option>
-												<option>Green (+$30.00)</option>
-											</select>
-										</div>
-										<div class="product-select product-Size">
-											<label><sup>*</sup>Size</label>
-											<select class="form-control">
-												<option> --- Please Select --- </option>
-												<option>Small (+$10.00)</option>
-												<option>Medium (+$20.00)</option>
-												<option>Large (+$30.00)</option>
-												<option>Extra Large (+$35.00)</option>
-											</select>
-										</div>
-										<div class="product-select product-type">
-											<label><sup>*</sup>Text</label>
-											<input type="text"  class="form-control" placeholder="Text"/>
-										</div>
-										<div class="product-select product-date">
-											<label><sup>*</sup>Date</label>
-											<input type="text"  class="form-control" placeholder="2016/02/15"/>
-										</div>
-										<div class="product-select product-checkbox">
-											<label><sup>*</sup>Checkbox</label>
-											<label><input type="checkbox" /> Checkbox 1  (+$5.00)</label>
-										</div>
-										<div class="product-select product-button">
-											<button type="submit" >
-												<i class="fa fa-calendar"></i>
-											</button>
-										</div>
-									</div>
-									<div class="product-quantity">
-										<span>Qty</span>
-										<input type="number" placeholder="1" />
-										<button type="submit" class="toch-button toch-add-cart">Add to Cart</button>
-										<button type="submit" class="toch-button toch-wishlist">wishlist</button>
-										<button type="submit" class="toch-button toch-compare">Compare</button>
-										<hr />
-										<a href="#"><img src="{{ asset('img/icon/social.png') }}" alt="#" /></a>
-									</div>
+
 								</div>
 							</div>
 							<!-- Start Toch-Box -->
