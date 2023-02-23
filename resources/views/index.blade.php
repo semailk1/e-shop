@@ -11,8 +11,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="page-menu">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active"><a href="#">Bestseller Product</a></li>
+                        {{ Breadcrumbs::render('/') }}
                     </ul>
                 </div>
             </div>
@@ -466,10 +465,10 @@
                                                             <div class="product-img">
                                                                 <a href="#">
                                                                     <img class="primary-img"
-                                                                         src="{{ asset($product->images[0]) }}"
+                                                                        style="height: 300px; width: 230px" src="{{ asset($product->images[0]) }}"
                                                                          alt="Product">
                                                                     <img class="secondary-img"
-                                                                         src="{{ asset($product->images[1]) }}"
+                                                                        style="height: 300px; width: 230px" src="{{ asset($product->images[1]) }}"
                                                                          alt="Product">
                                                                 </a>
                                                             </div>

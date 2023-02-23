@@ -21,9 +21,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('admin',[AdminController::class ,'index'])->name('admin.index');
 Route::get('admin/login',[AdminController::class ,'login'])->name('admin.login');
 Route::get('admin/users',[AdminController::class ,'users'])->name('admin.users');
+Route::get('admin/categories',[AdminController::class ,'categories'])->name('admin.categories');
+Route::get('admin/brands',[AdminController::class ,'brands'])->name('admin.brands');
 Route::get('admin/products',[AdminController::class ,'products'])->name('admin.products');
 Route::get('admin/products/create',[AdminController::class ,'productCreate'])->name('admin.products.create');
 Route::post('admin/products/store',[AdminController::class ,'productStore'])->name('admin.products.store');
+Route::get('admin/products/edit/{product}',[AdminController::class ,'productEdit'])->name('admin.products.edit');
+Route::post('admin/products/update/{product}',[AdminController::class ,'productUpdate'])->name('admin.products.update');
 Route::post('admin/auth',[AdminController::class ,'auth'])->name('admin.auth');
 
 Route::get('register',[AuthController::class ,'register'])->name('register.index');

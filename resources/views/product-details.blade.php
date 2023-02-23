@@ -6,9 +6,7 @@
 	            <div class="row">
 					<div class="col-md-12">
 						<ul class="page-menu">
-							<li><a href="index.html">Home</a></li>
-							<li><a href="#">cameras & photography</a></li>
-							<li class="active"><a href="#">Toch Prond</a></li>
+                            {{ Breadcrumbs::render('show', $product) }}
 						</ul>
 					</div>
 				</div>

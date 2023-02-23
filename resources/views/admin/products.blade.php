@@ -41,7 +41,7 @@
                     <td>{{ $product->article }}</td>
                     <td>{{ $product->category->name }}</td>
                     <td>{{ $product->brand->name }}</td>
-                    <td><a class="btn btn-success" href="#">Edit</a><a class="btn btn-danger" style="margin-left: 3px;" href="#">Delete</a></td>
+                    <td><a class="btn btn-success" href="{{ route('admin.products.edit', $product->id) }}">Edit</a><a class="btn btn-danger" style="margin-left: 3px;" href="#">Delete</a></td>
                 </tr>
             @endforeach
             </tbody>

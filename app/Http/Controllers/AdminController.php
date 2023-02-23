@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -71,10 +73,15 @@ class AdminController extends Controller
         return view('admin.product-create');
     }
 
+    public function productEdit(Product $product)
+    {
+        return view('admin.product-edit', compact('product'));
+    }
+
     public function productStore(Request $request)
     {
         $rules = [
-            'article' => 'required|unique:article|numeric',
+            'article' => 'required|unique:products,article|numeric',
             'title' => 'required|min:1|max:255',
             'price' => 'required',
             'category_id' => 'required|numeric|exists:categories,id',
@@ -109,5 +116,46 @@ class AdminController extends Controller
         $newProduct->save();
 
         return redirect()->back()->with(['success' => 'Saved!']);
+    }
+
+    public function productUpdate(Request $request, Product $product)
+    {
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $filename[] = 'storage/' . $image->store('images', 'public');
+            }
+            $product->images = array_merge($filename, $product->images);
+        }
+
+        if ($request->images_remove) {
+            $imagesRemove = Arr::only($product->images, $request->images_remove);
+            if (count(Arr::except($product->images, $request->images_remove)) > 1) {
+                $product->images = Arr::except($product->images, $request->images_remove);
+                Arr::map($imagesRemove, function ($value, $key){
+                   if (File::exists($value)){
+                       File::delete($value);
+                   }
+                });
+            }
+        }
+
+        $product->title = $request->title;
+        $product->price = $request->price;
+        $product->article = $request->article;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->discount = $request->discount;
+        $product->purchase_price = $request->purchase_price;
+        $product->quantity = $request->quantity;
+        $product->description = $request->description;
+        $product->save();
+
+        return redirect()->back();
+    }
+
+    public function brands()
+    {
+        return view('admin.brands-index');
     }
 }

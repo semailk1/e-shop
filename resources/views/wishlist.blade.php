@@ -214,7 +214,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if($favorites->isEmpty())
+                                @if(empty($favorites))
                                     <tr>
                                         <td class="text-center" colspan="7">
                                             Нету избранных

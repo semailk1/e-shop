@@ -35,28 +35,29 @@
             </select>
 
             <label for="title">TITLE <span style="color: red">*</span></label>
-            <input id="title" class="form-control" name="title" type="text">
+            <input value="{{ old('title') }}" id="title" class="form-control" name="title" type="text">
 
             <label for="article">ARTICLE <span style="color: red">*</span></label>
-            <input name="article" class="form-control" type="number">
+            <input value="{{ old('article') }}" name="article" id="article" class="form-control" type="number">
 
             <label for="quantity">QUANTITY <span style="color: red">*</span></label>
-            <input class="form-control" name="quantity" id="quantity" type="number">
+            <input value="{{ old('quantity') }}" class="form-control" name="quantity" id="quantity" type="number">
 
             <label for="price">Price <span style="color: red">*</span></label>
-            <input class="form-control" name="price" id="price" type="number">
+            <input value="{{ old('price') }}" class="form-control" name="price" id="price" type="number">
 
             <label for="discount">DISCOUNT <span style="color: red">*</span></label>
-            <input class="form-control" name="discount" id="discount" type="number">
+            <input value="{{old('discount')}}" class="form-control" name="discount" id="discount" type="number">
 
             <label for="purchase_price">PURCHASE PRICE <span style="color: red">*</span></label>
-            <input class="form-control" name="purchase_price" id="purchase_price" type="number">
+            <input value="{{old('purchase_price')}}" class="form-control" name="purchase_price" id="purchase_price"
+                   type="number">
 
             <label for="images">IMAGES <span style="color: red">*</span></label>
             <input class="form-control" type="file" id="images" name="images[]" multiple>
 
             <label for="description">DESCRIPTION <span style="color: red">*</span></label>
-            <textarea id="description" class="form-control" name="description"></textarea>
+            <textarea id="description" class="form-control" name="description">{{old('description')}}</textarea>
 
             <button class="btn btn-success" style="margin-top: 10px;">Save!</button>
 
