@@ -3,7 +3,9 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +23,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('admin',[AdminController::class ,'index'])->name('admin.index');
 Route::get('admin/login',[AdminController::class ,'login'])->name('admin.login');
 Route::get('admin/users',[AdminController::class ,'users'])->name('admin.users');
-Route::get('admin/categories',[AdminController::class ,'categories'])->name('admin.categories');
-Route::get('admin/brands',[AdminController::class ,'brands'])->name('admin.brands');
+
+/* CATEGORY */
+Route::get('admin/categories',[CategoryController::class ,'index'])->name('admin.categories');
+Route::get('admin/categories/create',[CategoryController::class ,'create'])->name('admin.category.create');
+Route::get('admin/categories/tree',[CategoryController::class ,'tree'])->name('admin.category.tree');
+Route::get('admin/categories/edit/{category}',[CategoryController::class ,'edit'])->name('admin.category.edit');
+Route::get('admin/categories/delete/{category}',[CategoryController::class ,'delete'])->name('admin.category.delete');
+Route::get('admin/categories/dont-parent', [CategoryController::class, 'getCategoriesDontParent'])->name('admin.category.get.dont-parent');
+
+/* BRAND */
+Route::get('admin/brands',[BrandController::class ,'index'])->name('admin.brands');
+Route::get('admin/brands/create',[BrandController::class ,'create'])->name('admin.brands.create');
+Route::get('admin/brands/edit/{brand}',[BrandController::class ,'edit'])->name('admin.brand.edit');
+Route::get('admin/brands/delete/{brand}',[BrandController::class ,'delete'])->name('admin.brand.delete');
+Route::post('admin/brands/store',[BrandController::class ,'store'])->name('admin.brands.store');
+Route::post('admin/brands/update/{brand}',[BrandController::class ,'update'])->name('admin.brands.update');
+
 Route::get('admin/products',[AdminController::class ,'products'])->name('admin.products');
 Route::get('admin/products/create',[AdminController::class ,'productCreate'])->name('admin.products.create');
 Route::post('admin/products/store',[AdminController::class ,'productStore'])->name('admin.products.store');
+
 Route::get('admin/products/edit/{product}',[AdminController::class ,'productEdit'])->name('admin.products.edit');
 Route::post('admin/products/update/{product}',[AdminController::class ,'productUpdate'])->name('admin.products.update');
 Route::post('admin/auth',[AdminController::class ,'auth'])->name('admin.auth');

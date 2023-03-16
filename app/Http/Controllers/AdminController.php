@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -132,10 +133,10 @@ class AdminController extends Controller
             $imagesRemove = Arr::only($product->images, $request->images_remove);
             if (count(Arr::except($product->images, $request->images_remove)) > 1) {
                 $product->images = Arr::except($product->images, $request->images_remove);
-                Arr::map($imagesRemove, function ($value, $key){
-                   if (File::exists($value)){
-                       File::delete($value);
-                   }
+                Arr::map($imagesRemove, function ($value, $key) {
+                    if (File::exists($value)) {
+                        File::delete($value);
+                    }
                 });
             }
         }
@@ -152,10 +153,5 @@ class AdminController extends Controller
         $product->save();
 
         return redirect()->back();
-    }
-
-    public function brands()
-    {
-        return view('admin.brands-index');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $name
+ * @property string $logo
  *
  * Class Brand
  * @package App\Models
@@ -17,7 +18,8 @@ class Brand extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'logo'
     ];
 
     public function products(): HasMany
